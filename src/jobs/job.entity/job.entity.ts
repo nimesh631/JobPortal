@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 
-@Entity()
+@Entity('jobs') 
 export class Job {
   @PrimaryGeneratedColumn()
   job_id: number;
@@ -22,4 +22,7 @@ export class Job {
 
   @Column({ type: 'enum', enum: ['full_time', 'part_time', 'contract', 'internship'] })
   employment_type: 'full_time' | 'part_time' | 'contract' | 'internship';
+
+  @CreateDateColumn()
+  created_at: Date; // Automatically set when the record is created
 }

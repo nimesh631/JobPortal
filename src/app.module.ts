@@ -1,8 +1,6 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JobsModule } from './jobs/jobs.module';
-import { Job } from './jobs/job.entity';
-import { JobsModule } from './jobs/jobs.module';
+import { Job } from './jobs/job.entity/job.entity';
 
 @Module({
   imports: [
@@ -14,9 +12,12 @@ import { JobsModule } from './jobs/jobs.module';
       password: 'nimesh',
       database: 'job_portal',
       entities: [Job],
-      synchronize: true, // Disable in production
+      synchronize: true,
     }),
-    JobsModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  async onModuleInit() {
+    console.log('Database connection established!');
+  }
+}
