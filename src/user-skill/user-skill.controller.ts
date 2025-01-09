@@ -4,7 +4,7 @@ import { CreateUserSkillDto } from './dto/create-user-skill.dto';
 import { UpdateUserSkillDto } from './dto/update-user-skill.dto';
 import { UserSkill } from './user-skill.entity/user-skill.entity';
 
-@Controller('user-skill')
+@Controller('user_skill')
 export class UserSkillController {
   constructor(private readonly userSkillService: UserSkillService) {}
 

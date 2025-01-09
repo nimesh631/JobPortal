@@ -1,4 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, OneToMany } from 'typeorm';
+import { User } from 'src/users/user.entity/user.entity';
+import { JobSkill } from 'src/job-skill/jobskill.entity/jobskill.entity';
+import { Application } from 'src/applications/applications.entity/applications.entity';
 
 @Entity('jobs') 
 export class Job {
@@ -25,4 +28,14 @@ export class Job {
 
   @CreateDateColumn()
   created_at: Date; // Automatically set when the record is created
+
+  @ManyToOne(()=>User,(user)=>user.job)
+  user: User
+
+  @OneToMany(()=>JobSkill,(jobSkill)=>jobSkill.job)
+  jobSkill: JobSkill[]
+
+  @OneToMany(()=>Application,(application)=>application.job)
+  application: Application[]
+
 }

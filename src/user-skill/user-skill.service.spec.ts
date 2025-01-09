@@ -1,18 +1,36 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { UserSkillService } from './user-skill.service';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { UserSkill } from './user-skill.entity/user-skill.entity'
+import { CreateUserSkillDto } from './dto/create-user-skill.dto';
+import { UpdateUserSkillDto } from './dto/update-user-skill.dto';
 
-describe('UserSkillService', () => {
-  let service: UserSkillService;
+@Injectable()
+export class UserSkillService {
+  constructor(
+    @InjectRepository(UserSkill)
+    private userSkillRepository: Repository<UserSkill>,
+  ) {}
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [UserSkillService],
-    }).compile();
+  async create(createUserSkillDto: CreateUserSkillDto): Promise<UserSkill> {
+    const userSkill = this.userSkillRepository.create(createUserSkillDto);
+    return this.userSkillRepository.save(userSkill);
+  }
 
-    service = module.get<UserSkillService>(UserSkillService);
-  });
+  async findAll(): Promise<UserSkill[]> {
+    return this.userSkillRepository.find();
+  }
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-});
+  async findOne(id: number): Promise<UserSkill> {
+    return this.userSkillRepository.findOne({ where: { user_skill_id: id } });
+  }
+
+  async update(id: number, updateUserSkillDto: UpdateUserSkillDto): Promise<UserSkill> {
+    await this.userSkillRepository.update(id, updateUserSkillDto);
+    return this.findOne(id);
+  }
+
+  async remove(id: number): Promise<void> {
+    await this.userSkillRepository.delete(id);
+  }
+}

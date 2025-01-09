@@ -1,4 +1,9 @@
-import {Entity, PrimaryGeneratedColumn, Column,CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { application } from 'express';
+import { Application } from 'src/applications/applications.entity/applications.entity';
+import { Job } from 'src/jobs/job.entity/job.entity';
+import { Resume } from 'src/resume/resume.entity/resume.entity';
+import { UserSkill } from 'src/user-skill/user-skill.entity/user-skill.entity';
+import {Entity, PrimaryGeneratedColumn, Column,CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm'
 
 @Entity('users')
 export class User{
@@ -25,4 +30,17 @@ export class User{
    
      @UpdateDateColumn()
      updated_at: Date;
+
+     @OneToMany(()=>Resume,(resume)=>resume.user)
+     resume:Resume[]
+
+     @OneToMany(()=>Application,(application)=>application.user)
+     application: Application[]
+
+     @OneToMany(()=>Job,(job)=>job.user)
+     job: Job[]
+
+     @OneToMany(()=>UserSkill,(userSkill)=>userSkill.user)
+     userSkill: UserSkill[]
+
 }
