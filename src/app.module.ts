@@ -10,6 +10,8 @@ import { ResumeModule } from './resume/resume.module';
 import { Resume } from './resume/resume.entity/resume.entity';
 import { SkillsModule } from './skills/skills.module';
 import { Skill } from './skills/skill.entity/skill.entity';
+import { JobSkillModule } from './job-skill/job-skill.module';
+import { JobSkill } from './job-skill/jobskill.entity/jobskill.entity';
 
 @Module({
   imports: [
@@ -20,7 +22,7 @@ import { Skill } from './skills/skill.entity/skill.entity';
       username: 'postgres',
       password: 'nimesh',
       database: 'job_portal',
-      entities: [Job,User,UserSkill,Resume,Skill],
+      entities: [Job,User,UserSkill,Resume,Skill,JobSkill],
       synchronize: true,
     }),
     UsersModule,
@@ -28,6 +30,7 @@ import { Skill } from './skills/skill.entity/skill.entity';
     UserSkillModule,
     ResumeModule,
     SkillsModule,
+    JobSkillModule,
   ],
 })
 export class AppModule implements OnModuleInit {
