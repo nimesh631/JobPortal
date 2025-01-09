@@ -4,6 +4,8 @@ import { Job } from './jobs/job.entity/job.entity';
 import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity/user.entity';
 import { JobsModule } from './jobs/jobs.module';
+import { UserSkillModule } from './user-skill/user-skill.module';
+import { UserSkill } from './user-skill/user-skill.entity/user-skill.entity';
 
 @Module({
   imports: [
@@ -14,11 +16,12 @@ import { JobsModule } from './jobs/jobs.module';
       username: 'postgres',
       password: 'nimesh',
       database: 'job_portal',
-      entities: [Job,User],
+      entities: [Job,User,UserSkill],
       synchronize: true,
     }),
     UsersModule,
     JobsModule,
+    UserSkillModule,
   ],
 })
 export class AppModule implements OnModuleInit {
