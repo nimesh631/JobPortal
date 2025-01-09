@@ -12,6 +12,8 @@ import { SkillsModule } from './skills/skills.module';
 import { Skill } from './skills/skill.entity/skill.entity';
 import { JobSkillModule } from './job-skill/job-skill.module';
 import { JobSkill } from './job-skill/jobskill.entity/jobskill.entity';
+import { ApplicationModule } from './applications/applications.module';
+import { Application } from './applications/applications.entity/applications.entity';
 
 @Module({
   imports: [
@@ -22,7 +24,7 @@ import { JobSkill } from './job-skill/jobskill.entity/jobskill.entity';
       username: 'postgres',
       password: 'nimesh',
       database: 'job_portal',
-      entities: [Job,User,UserSkill,Resume,Skill,JobSkill],
+      entities: [Job,User,UserSkill,Resume,Skill,JobSkill,Application],
       synchronize: true,
     }),
     UsersModule,
@@ -31,10 +33,8 @@ import { JobSkill } from './job-skill/jobskill.entity/jobskill.entity';
     ResumeModule,
     SkillsModule,
     JobSkillModule,
+    ApplicationModule,
   ],
 })
-export class AppModule implements OnModuleInit {
-  async onModuleInit() {
-    console.log('Database connection established!');
-  }
-}
+export class AppModule{}
+
