@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { Skill } from './skill.entity/skill.entity';
 import { CreateSkillDto } from './dto/create-skill.dto';
 import { UpdateSkillDto } from './dto/update-skill-dto';
@@ -24,17 +24,26 @@ export class SkillsService {
   }
 
   async findOne(id: number): Promise<Skill> {
-    return this.skillRepository.findOne({ where: { id: id } });
+    const skill= await this.skillRepository.findOne({ where: { id: id } });
+    if(!skill){
+      throw new NotFoundException(`Skill with ID ${id} not found.`);
+    }
+    return skill;
   }
 
 
   async update(id: number, updateSkillDto: UpdateSkillDto): Promise<Skill> {
-    await this.skillRepository.update(id, updateSkillDto);
-    return this.findOne(id);
+    const skill = await this.findOne(id);
+    Object.assign(skill,updateSkillDto);
+    return this.skillRepository.save(skill);
   }
 
 
-  async remove(id: number): Promise<void> {
-    await this.skillRepository.delete(id);
+  async delete(id: number): Promise<DeleteResult> {
+    const result = await this.skillRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Skill with ID ${id} not found.`);
+    }
+    return result;
   }
 }

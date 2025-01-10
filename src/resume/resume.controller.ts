@@ -31,12 +31,12 @@ export class ResumeController {
     @Param('id') id: number,
     @Body() updateResumeDto: UpdateResumeDto,
   ): Promise<Resume> {
-    return this.resumeService.update(id, updateResumeDto);
+    return this.resumeService.update(+id, updateResumeDto);
   }
 
 
   @Delete(':id')
-  remove(@Param('id') id: number): Promise<void> {
-    return this.resumeService.remove(id);
+  remove(@Param('id') id: number){
+    return this.resumeService.delete(id);
   }
 }

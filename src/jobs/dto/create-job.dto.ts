@@ -1,27 +1,32 @@
-import { IsNotEmpty, IsString, IsEnum, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsInt, IsEnum, IsNumber, IsDate } from 'class-validator';
+import { Type } from 'class-transformer';
+import { JobType } from './job-type-enum';
+import { Status } from './job-status-enum';
 
-export class CreateJobDto {
-  @IsNotEmpty()
-  @IsString()
-  title: string;
-
-  @IsNotEmpty()
-  @IsString()
-  description: string;
-
-  @IsOptional()
-  @IsString()
-  requirements?: string;
-
-  @IsOptional()
-  @IsString()
-  location?: string;
-
-  @IsOptional()
-  @IsString()
-  salary_range?: string;
-
-  @IsNotEmpty()
-  @IsEnum(['full_time', 'part_time', 'contract', 'internship'])
-  employment_type: 'full_time' | 'part_time' | 'contract' | 'internship';
-}
+  export class CreateJobDto {
+    @IsInt()
+    userId: number;
+  
+    @IsNotEmpty()
+    title: string;
+  
+    @IsNotEmpty()
+    description: string;
+  
+    @IsNotEmpty()
+    location: string;
+  
+    @IsEnum(JobType)
+    employment_type: JobType;
+  
+    @IsNumber()
+    salary_range: number;
+  
+    @IsDate()
+    @Type(() => Date)
+    application_deadline: Date;
+  
+    @IsEnum(Status)
+    status: Status;
+  }
+  

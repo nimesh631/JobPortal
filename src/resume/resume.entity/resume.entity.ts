@@ -1,24 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne } from 'typeorm';
 import { User } from 'src/users/user.entity/user.entity';
-import { Application } from 'src/applications/applications.entity/applications.entity';
 
-@Entity('resumes')
+@Entity()
 export class Resume {
   @PrimaryGeneratedColumn()
-  resume_id: number;
+  id: number;
 
   @Column()
-  resume_file: string;
+  file_url: string;
 
   @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  @ManyToOne(() => User, (user) => user.resume, { onDelete: 'CASCADE' })
-  user: User;  // The foreign key reference properly set to 'userId'
-
-  @OneToMany(() => Application, (application) => application.resume)
-  application: Application[];
+  @OneToOne(() => User, (user) => user.resume)
+  user: User;
 }

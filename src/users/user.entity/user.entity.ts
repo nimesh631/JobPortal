@@ -1,46 +1,49 @@
-import { application } from 'express';
+
 import { Application } from 'src/applications/applications.entity/applications.entity';
 import { Job } from 'src/jobs/job.entity/job.entity';
 import { Resume } from 'src/resume/resume.entity/resume.entity';
 import { UserSkill } from 'src/user-skill/user-skill.entity/user-skill.entity';
-import {Entity, PrimaryGeneratedColumn, Column,CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm'
+import {Entity, PrimaryGeneratedColumn, Column,CreateDateColumn, UpdateDateColumn, OneToOne ,OneToMany} from 'typeorm'
+import { userRole } from '../dto/user-role.enum';
 
-@Entity('users')
-export class User{
-    @PrimaryGeneratedColumn()
-    user_id: number;
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({unique: true})
-    username: string;
+  @Column()
+  name: string;
 
-    @Column({unique: true})
-    email: string;
+  @Column({ unique: true })
+  email: string;
 
-    @Column()
-    password_hash: string;
+  @Column()
+  password: string;
 
-    @Column()
-    full_name: string;
+  @Column()
+  phone_number: string;
 
-    @Column({ type: 'enum', enum: ['job_seeker', 'employer'] })
-     user_type: 'job_seeker' | 'employer';
+  @Column({
+    type: 'enum',
+    enum: userRole,
+  })
+  role: userRole;
 
-     @CreateDateColumn()
-     created_at: Date;
-   
-     @UpdateDateColumn()
-     updated_at: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-     @OneToMany(()=>Resume,(resume)=>resume.user)
-     resume:Resume[]
+  @UpdateDateColumn()
+  updatedAt: Date;
 
-     @OneToMany(()=>Application,(application)=>application.user)
-     application: Application[]
+  @OneToMany(() => Job, (job) => job.user)
+  jobs: Job[];
 
-     @OneToMany(()=>Job,(job)=>job.user)
-     job: Job[]
+  @OneToMany(() => Application, (application) => application.user)
+  application: Application;
 
-     @OneToMany(()=>UserSkill,(userSkill)=>userSkill.user)
-     userSkill: UserSkill[]
+  @OneToOne(() => Resume, (resume) => resume.user)
+  resume: Resume;
 
+  @OneToMany(() => UserSkill, (user_skill) => user_skill.user_id)
+  user_skill: UserSkill;
 }

@@ -10,9 +10,9 @@ export class Skill {
     @Column()
     skill_name: string;
 
-    @OneToMany(()=>UserSkill,(userSkill)=>userSkill.skill)
-    userSkill: UserSkill[]
+    @OneToMany(() => UserSkill, (user_skill) => user_skill.skill)
+  user_skill: UserSkill;
 
-    @OneToMany(()=>JobSkill,(jobSkill)=>jobSkill.skill)
-    jobSkill: JobSkill[];
+  @OneToMany(() => JobSkill, (job_skill) => job_skill.skill_id)
+  job_skill: JobSkill;
 }

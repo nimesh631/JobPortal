@@ -32,7 +32,7 @@ export class ApplicationController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number): Promise<void> {
+  remove(@Param('id') id: number) {
     return this.applicationService.remove(id);
   }
 }

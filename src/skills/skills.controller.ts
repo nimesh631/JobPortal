@@ -36,7 +36,7 @@ export class SkillsController {
 
 
   @Delete(':id')
-  remove(@Param('id') id: number): Promise<void> {
-    return this.skillService.remove(id);
+  remove(@Param('id') id: number) {
+    return this.skillService.delete(id);
   }
 }

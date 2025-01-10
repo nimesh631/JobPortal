@@ -2,40 +2,45 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, On
 import { User } from 'src/users/user.entity/user.entity';
 import { JobSkill } from 'src/job-skill/jobskill.entity/jobskill.entity';
 import { Application } from 'src/applications/applications.entity/applications.entity';
+import { Status } from '../dto/job-status-enum';
+import { JobType } from '../dto/job-type-enum';
 
 @Entity('jobs') 
 export class Job {
   @PrimaryGeneratedColumn()
-  job_id: number;
+  id: number;
 
-  @Column({ length: 100 })
+  @Column()
   title: string;
 
-  @Column('text')
+  @Column()
   description: string;
 
-  @Column({ nullable: true })
-  requirements?: string;
+  @Column()
+  location: string;
 
-  @Column({ nullable: true })
-  location?: string;
+  @Column({ type: 'enum', enum: JobType })
+  employment_type: JobType;
 
-  @Column({ nullable: true })
-  salary_range?: string;
-
-  @Column({ type: 'enum', enum: ['full_time', 'part_time', 'contract', 'internship'] })
-  employment_type: 'full_time' | 'part_time' | 'contract' | 'internship';
+  @Column()
+  salary_range: number;
 
   @CreateDateColumn()
-  created_at: Date; // Automatically set when the record is created
+  posted_date: Date;
 
-  @ManyToOne(()=>User,(user)=>user.job)
-  user: User
+  @Column()
+  application_deadline: Date;
 
-  @OneToMany(()=>JobSkill,(jobSkill)=>jobSkill.job)
-  jobSkill: JobSkill[]
+  @Column({ type: 'enum', enum: Status })
+  status: Status;
 
-  @OneToMany(()=>Application,(application)=>application.job)
-  application: Application[]
+  @ManyToOne(() => User, (user) => user.jobs, { nullable: false })
+  user: User;
+
+  @OneToMany(() => Application, (application) => application.job)
+  application: Application;
+
+  @OneToMany(() => JobSkill, (job_skill) => job_skill.job_id)
+  job_skill: JobSkill;
 
 }

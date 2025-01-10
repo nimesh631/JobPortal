@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body,Query } from '@nestjs/common';
 import { JobsService } from './jobs.service';
 import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
+import { JobType } from './dto/job-type-enum';
+import { Status } from './dto/job-status-enum';
 
 @Controller('jobs')
 export class JobsController {
@@ -13,8 +15,13 @@ export class JobsController {
   }
 
   @Get()
-  findAll() {
-    return this.jobsService.findAll();
+  findAll(
+    @Query('employment_type') employment_type?: JobType,
+    @Query('status') status?: Status,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    return this.jobsService.findAll({employment_type, status, page, limit});
   }
 
   @Get(':id')

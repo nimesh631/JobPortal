@@ -12,9 +12,9 @@ export class UserSkill {
   @Column()
   skill_id: number;
 
-  @ManyToOne(()=>User,(user)=>user.userSkill)
+  @ManyToOne(()=>User,(user)=>user.user_skill)
   user: User
 
-  @ManyToOne(()=>Skill,(skill)=>skill.userSkill)
+  @ManyToOne(()=>Skill,(skill)=>skill.user_skill)
     skill:Skill
 }

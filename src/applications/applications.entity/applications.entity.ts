@@ -1,33 +1,26 @@
 import { Job } from 'src/jobs/job.entity/job.entity';
-import { Resume } from 'src/resume/resume.entity/resume.entity';
+import { ApplicationStatus } from '../dto/applications-status.enum';
 import { User } from 'src/users/user.entity/user.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne ,CreateDateColumn} from 'typeorm';
 
-export enum ApplicationStatus {
-  PENDING = 'pending',
-  ACCEPTED = 'accepted',
-  REJECTED = 'rejected',
-}
 
 @Entity('applications')
 export class Application {
   @PrimaryGeneratedColumn()
-  application_id: number;
+  id: number;
 
-  @Column()
-  job_id: number;
+  @CreateDateColumn()
+  application_date: Date;
 
-  @Column()
-  application_date: string;
-
-  @Column({ type: 'enum', enum: ApplicationStatus })
+  @Column({
+    type: 'enum',
+    enum: ApplicationStatus,
+    default: ApplicationStatus.PENDING,
+  })
   status: ApplicationStatus;
 
   @ManyToOne(()=>User,(user)=>user.application)
   user:User
-
-  @ManyToOne(() => Resume, (resume) =>resume.application)
- resume: Resume
 
  @ManyToOne(()=>Job,(job)=>job.application)
  job: Job

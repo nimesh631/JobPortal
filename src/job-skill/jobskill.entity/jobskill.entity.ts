@@ -10,9 +10,12 @@ export class JobSkill {
   @Column()
   job_id: number;
 
-  @ManyToOne(()=>Job,(job)=>job.jobSkill)
-  job: Job
+  @Column()
+  skill_id: number;
 
-  @ManyToOne(()=>Skill,(skill)=>skill.jobSkill)
-  skill: Skill
+  @ManyToOne(() => Job, (job) => job.job_skill)
+  job: Job;
+
+  @ManyToOne(() => Skill, (skill) => skill.job_skill)
+  skill: Skill;
 }

@@ -1,17 +1,15 @@
 
-import { IsInt, IsEnum, IsDateString } from 'class-validator';
+import { IsInt, IsEnum, IsOptional } from 'class-validator';
 import { ApplicationStatus} from './applications-status.enum'
 
 export class CreateApplicationDto {
   @IsInt()
-  user_id: number;
+  jobId: number;
 
   @IsInt()
-  job_id: number;
+  userId: number;
 
-  @IsDateString()
-  application_date: string;
-
+  @IsOptional()
   @IsEnum(ApplicationStatus)
-  status: ApplicationStatus;
+  status?: ApplicationStatus;
 }
